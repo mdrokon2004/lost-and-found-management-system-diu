@@ -2,7 +2,15 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 define('SITE_NAME', 'DIU Lost & Found');
-define('BASE_URL', '/lost-and-found-management-system');
+
+if (!defined('BASE_URL')) {
+    $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+    if (strpos($scriptName, '/lost-and-found-management-system') !== false) {
+        define('BASE_URL', '/lost-and-found-management-system');
+    } else {
+        define('BASE_URL', '');
+    }
+}
 
 function e($value) {
     return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');

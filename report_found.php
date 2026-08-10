@@ -11,7 +11,9 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
  }
  if($title&&$description&&$cat&&$loc&&$date){
    $s=$pdo->prepare("INSERT INTO $table(user_id,title,description,category_id,location_id,$datecol,status_id,image_path) VALUES(?,?,?,?,?,?,?,?)");
-   $s->execute([$_SESSION['user']['id'],$title,$description,$cat,$loc,$date,$status,$imagePath]);flash('success','Your report has been submitted for admin review.');redirect('user/dashboard.php');
+   $s->execute([$_SESSION['user']['id'],$title,$description,$cat,$loc,$date,$status,$imagePath]);
+   notify_admins($pdo, 'New Found Item Report', $_SESSION['user']['name'] . ' reported a found item: "' . $title . '". Pending review.');
+   flash('success','Your report has been submitted for admin review.');redirect('user/dashboard.php');
  } else flash('danger','Please complete all required fields.');
 }
 $categories=$pdo->query("SELECT * FROM categories ORDER BY name")->fetchAll();$locations=$pdo->query("SELECT * FROM locations ORDER BY name")->fetchAll();

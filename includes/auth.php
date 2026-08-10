@@ -26,3 +26,35 @@ function logout_user() {
     }
     session_destroy();
 }
+
+function notify_user($pdo, $userId, $title, $message) {
+    if (!$userId || !$title || !$message) return false;
+    $stmt = $pdo->prepare("INSERT INTO notifications (user_id, title, message) VALUES (?, ?, ?)");
+    return $stmt->execute([$userId, $title, $message]);
+}
+
+function notify_admins($pdo, $title, $message) {
+    if (!$title || !$message) return false;
+    $stmt = $pdo->query("SELECT u.id FROM users u JOIN roles r ON r.id = u.role_id WHERE r.code = 'admin'");
+    $adminIds = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    $insertStmt = $pdo->prepare("INSERT INTO notifications (user_id, title, message) VALUES (?, ?, ?)");
+    foreach ($adminIds as $adminId) {
+        $insertStmt->execute([$adminId, $title, $message]);
+    }
+    return true;
+}
+
+function get_unread_notification_count($pdo, $userId) {
+    if (!$userId) return 0;
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM notifications WHERE user_id = ? AND is_read = 0");
+    $stmt->execute([$userId]);
+    return (int)$stmt->fetchColumn();
+}
+
+function get_recent_notifications($pdo, $userId, $limit = 5) {
+    if (!$userId) return [];
+    $stmt = $pdo->prepare("SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC LIMIT " . (int)$limit);
+    $stmt->execute([$userId]);
+    return $stmt->fetchAll();
+}
+
