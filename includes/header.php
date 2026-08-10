@@ -21,6 +21,24 @@ if ($user && isset($pdo)) {
 <script>
 (function(){try{var t=localStorage.getItem('diu-theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;}catch(e){}})();
 </script>
+<?php if ($user): ?>
+<script>
+(function() {
+  var isFresh = <?= !empty($_SESSION['fresh_login']) ? 'true' : 'false' ?>;
+  var tabSession = sessionStorage.getItem('diu_tab_active');
+  if (isFresh) {
+    sessionStorage.setItem('diu_tab_active', '1');
+  } else if (!tabSession) {
+    window.location.href = "<?= BASE_URL ?>/logout.php?reason=tab_closed";
+  }
+})();
+</script>
+<?php 
+  if (!empty($_SESSION['fresh_login'])) {
+      unset($_SESSION['fresh_login']);
+  }
+endif; 
+?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">

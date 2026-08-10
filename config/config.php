@@ -1,7 +1,13 @@
 <?php
+ini_set('session.cookie_lifetime', 0);
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 define('SITE_NAME', 'DIU Lost & Found');
+
+if (!defined('SERVER_INSTANCE_ID')) {
+    $pid = function_exists('getmypid') ? getmypid() : '1';
+    define('SERVER_INSTANCE_ID', md5(__FILE__ . '_' . $pid));
+}
 
 if (!defined('BASE_URL')) {
     $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';

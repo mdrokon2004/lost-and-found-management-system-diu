@@ -14,7 +14,25 @@ function login_user($user) {
         'email' => $user['email'],
         'role' => $user['role_name']
     ];
+    if (defined('SERVER_INSTANCE_ID')) {
+        $_SESSION['server_instance_id'] = SERVER_INSTANCE_ID;
+    }
+    $_SESSION['fresh_login'] = true;
 }
+
+function verify_session_security() {
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    if (isset($_SESSION['user'])) {
+        if (defined('SERVER_INSTANCE_ID') && isset($_SESSION['server_instance_id'])) {
+            if ($_SESSION['server_instance_id'] !== SERVER_INSTANCE_ID) {
+                logout_user();
+                flash('warning', 'The server was restarted. Please log in again.');
+                redirect('login.php');
+            }
+        }
+    }
+}
+verify_session_security();
 
 function logout_user() {
     $_SESSION = [];
