@@ -1,6 +1,7 @@
 /* =========================================================
    DIU LOST & FOUND — macOS Sonoma & iOS 18 Liquid Glass UI
    Authentic Apple Glassmorphism (Light & Dark Theme)
+   Project UI Tokens & Responsive Layout
    ========================================================= */
 
 :root {
@@ -93,6 +94,7 @@ a:hover {
 .text-secondary { color: var(--muted) !important; }
 
 /* ---------------- macOS Glass Navigation ---------------- */
+/* Navigation layer */
 .glass-nav {
   background: color-mix(in srgb, var(--surface-solid) 60%, transparent);
   backdrop-filter: blur(35px) saturate(210%);
@@ -731,6 +733,7 @@ html[data-theme="dark"] .glass-dropdown {
 }
 
 /* ---------------- Responsive Tweaks ---------------- */
+/* Mobile and tablet compatibility */
 @media (max-width: 1000px) {
   .auth-card-modern {
     grid-template-columns: 1fr !important;

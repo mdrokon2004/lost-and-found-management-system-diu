@@ -1,6 +1,7 @@
 (function () {
   const root = document.documentElement;
   const storageKey = 'diu-theme';
+  const dismissDelay = 4500;
 
   function preferredTheme() {
     const saved = localStorage.getItem(storageKey);
@@ -25,7 +26,11 @@
   }
 
   // Apply immediately so the page never needs a reload for theme switching.
-  try { applyTheme(preferredTheme()); } catch (e) { root.setAttribute('data-theme', 'light'); }
+  try {
+    applyTheme(preferredTheme());
+  } catch (e) {
+    root.setAttribute('data-theme', 'light');
+  }
 
   document.addEventListener('DOMContentLoaded', () => {
     updateThemeControls(root.dataset.theme || 'light');
@@ -41,7 +46,7 @@
     });
 
     document.querySelectorAll('.auto-dismiss').forEach(el => {
-      setTimeout(() => el.remove(), 4500);
+      setTimeout(() => el.remove(), dismissDelay);
     });
   });
 })();
