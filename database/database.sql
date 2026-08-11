@@ -122,7 +122,7 @@ CREATE TABLE activity_logs(
 
 INSERT INTO roles(name,code) VALUES ('Administrator','admin'),('Student/User','user');
 INSERT INTO categories(name,code) VALUES
-('Electronics','electronics'),('ID Card','id_card'),('Wallet','wallet'),('Keys','keys'),('Documents','documents'),('Bag','bag'),('Other','other');
+('girl friend','girl friend'),('Electronics','electronics'),('ID Card','id_card'),('Wallet','wallet'),('Keys','keys'),('Documents','documents'),('Bag','bag'),('Other','other');
 INSERT INTO locations(name,code) VALUES
 ('Daffodil Smart City','smart_city'),('Main Campus','main_campus'),('Library','library'),('Food Court','food_court'),('Academic Building','academic_building'),('Transport Area','transport'),('Other','other');
 INSERT INTO statuses(name,code) VALUES
