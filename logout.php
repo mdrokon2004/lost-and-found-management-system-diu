@@ -15,3 +15,5 @@ if ($reason === 'tab_closed') {
 }
 
 redirect('login.php');
+exit;
+?>
